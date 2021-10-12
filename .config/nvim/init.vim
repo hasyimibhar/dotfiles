@@ -1,14 +1,17 @@
 call plug#begin()
 
+Plug 'neovim/nvim-lspconfig'
+
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 
-Plug 'tpope/vim-sensible'
+" Plug 'tpope/vim-sensible'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'tpope/vim-fugitive'
-Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'cespare/vim-toml'
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 Plug 'preservim/nerdtree'
@@ -16,26 +19,43 @@ Plug 'preservim/nerdtree'
 Plug 'honza/vim-snippets'
 Plug 'chaoren/vim-wordmotion'
 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'antoinemadec/coc-fzf'
 
-let g:coc_global_extensions = ['coc-eslint', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-snippets']
+Plug 'APZelos/blamer.nvim'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
+Plug 'https://github.com/dylon/vim-antlr.git'
+
+Plug 'https://github.com/leafgarland/typescript-vim.git'
+Plug 'nvim-treesitter/nvim-treesitter'
+
+let g:coc_global_extensions = ['coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-snippets', 'coc-java']
 
 call plug#end()
 
 let g:airline_powerline_fonts = 1
-set rtp+=/usr/bin/fzf
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_theme = "onedark"
 
 let g:coc_fzf_preview = ''
 let g:coc_fzf_opts = []
 
 let mapleader = ","
 
-set autowrite
+let g:blamer_enabled = 0
+let g:blamer_delay = 500
+
 syntax enable
+set autowrite
 set termguicolors
-set bg=light
-colorscheme gruvbox
+set bg=dark
+colorscheme citylights
 
 set laststatus=2
 set number relativenumber
@@ -48,7 +68,12 @@ set numberwidth=5
 "   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 " augroup END
 
-highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+" highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'open -a Preview'
+
+au BufRead,BufNewFile *.g4 set filetype=antlr4
 
 " =============
 " vim-go
@@ -63,8 +88,10 @@ let g:go_def_mapping_enabled = 0
 
 let vim_markdown_preview_github = 1
 let vim_markdown_preview_use_xdg_open = 1
-let vim_markdown_preview_browser = 'Firefox'
+let vim_markdown_preview_browser = 'Chrome'
 let vim_markdown_preview_toggle = 3
+
+let g:typescript_indent_disable = 1
 
 " =============
 " coc-nvim
@@ -132,6 +159,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next-error)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD :call CocAction('jumpDefinition', 'vsplit')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -278,4 +306,30 @@ else
     let g:fzf_layout = { "window": "silent botright 16split enew" }
 endif
 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+augroup mips
+  au!
+  autocmd BufNewFile,BufRead *.s set syntax=mips
+augroup END
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true,
+  },
+}
+
+require'lspconfig'.jdtls.setup{
+   cmd = { 'jdtls' },
+   root_dir = function(fname)
+      return require'lspconfig'.util.root_pattern('pom.xml', 'gradle.build', '.git')(fname) or vim.fn.getcwd()
+   end
+}
+EOF

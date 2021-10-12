@@ -2,13 +2,13 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/hasyimibhar/.oh-my-zsh"
+export ZSH="/Users/hasyimibhar/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="typewritten"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,7 +68,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+	git
+	vi-mode
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,20 +104,23 @@ source $ZSH/oh-my-zsh.sh
 # Go
 export GOROOT=/usr/local/go
 export GOBIN=$GOROOT/bin
-export PATH=$PATH:$GOBIN
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOBIN:$GOPATH/bin
 
 # Yarn
 export YARNBIN=$HOME/.yarn/bin
 export PATH=$PATH:$YARNBIN
 
 # Java
-export JAVA_HOME=/usr/local/java/jdk1.8.0_261
+#export JAVA_HOME=/usr/local/java/jdk1.8.0_261
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home
 export PATH=$PATH:$JAVA_HOME/bin
 
 # Android
-export ANDROID_HOME=$HOME/Android/Sdk
-export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
 export ANDROID_AVD_HOME=$HOME/.android/avd
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools
 
 # Pip
 export PIPBIN=$HOME/.local/bin
@@ -129,4 +135,44 @@ fd() {
   git diff $@ --name-only | fzf -m --ansi --preview $preview
 }
 
-export BAT_THEME="gruvbox-light"
+export BAT_THEME="TwoDark"
+
+export PATH=$PATH:/usr/local/homebrew/bin
+
+export FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/homebrew/opt/nvm/nvm.sh" ] && . "/usr/local/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Python
+## alias python=/usr/local/homebrew/bin/python3
+## alias pip=/usr/local/bin/pip3
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+#export PATH=$PATH:/Users/hasyimibhar/Library/Python/3.7/bin
+
+# Antlr
+export CLASSPATH=".:/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH"
+alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
+
+# Beam
+export LDFLAGS="-L/usr/local/homebrew/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/homebrew/opt/openssl@1.1/include"
+
+# LLVM dev
+export PATH="$HOME/workspace/hasyimibhar/arcanist/bin:$PATH"
+export PATH"=$HOME/workspace/llvm/llvm-project/clang/tools/clang-format:$PATH"
+
+# Enable vi mode
+bindkey -v
