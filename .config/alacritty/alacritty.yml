@@ -46,8 +46,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 18
-    y: 18
+    x: 2
+    y: 2
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -111,7 +111,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Fira Code
+    family: FiraCode Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -179,7 +179,7 @@ font:
 colors:
   # Default colors
   primary:
-    background: '#1D252C'
+    background: '#32302F'
   #  foreground: '#c5c8c6'
 
     # Bright and dim foreground colors
