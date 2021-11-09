@@ -1,0 +1,7 @@
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[user]
+	name = Hasyimi Bahrudin
+	email = hasyimi@ridebeam.com
+[pull]
+	ff = only

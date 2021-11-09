@@ -1,8 +1,12 @@
+if [[ -z "$LC_ALL" ]]; then
+  export LC_ALL='en_US.UTF-8'
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/hasyimibhar/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -145,12 +149,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/homebrew/opt/nvm/nvm.sh" ] && . "/usr/local/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/google-cloud-sdk/completion.zsh.inc'; fi
-
 # Python
 ## alias python=/usr/local/homebrew/bin/python3
 ## alias pip=/usr/local/bin/pip3
@@ -159,7 +157,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
-#export PATH=$PATH:/Users/hasyimibhar/Library/Python/3.7/bin
+#export PATH=$PATH:$HOME/Library/Python/3.7/bin
 
 # Antlr
 export CLASSPATH=".:/usr/local/lib/antlr-4.9-complete.jar:$CLASSPATH"
@@ -176,3 +174,9 @@ export PATH"=$HOME/workspace/llvm/llvm-project/clang/tools/clang-format:$PATH"
 
 # Enable vi mode
 bindkey -v
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/hasyimibahrudin/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/hasyimibahrudin/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/hasyimibahrudin/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hasyimibahrudin/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

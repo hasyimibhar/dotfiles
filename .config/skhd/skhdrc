@@ -96,6 +96,9 @@ shift + alt - l : yabai -m window --warp east
 shift + alt - j : yabai -m window --warp south
 shift + alt - k : yabai -m window --warp north
 
+# rotate
+shift + alt - r : yabai -m space --rotate 90
+
 # balance size of windows
 # shift + alt - 0 : yabai -m space --balance
 
@@ -171,3 +174,6 @@ alt - e : yabai -m window --toggle split
 #           yabai -m window --toggle pip
 
 alt - return : alacritty
+
+# reload skhd
+alt + shift - c : skhd reload
